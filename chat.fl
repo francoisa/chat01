@@ -8,12 +8,14 @@ decl {\#include <stdlib.h>} {private local
 decl {\#include <iostream>} {private global
 } 
 
-decl {using namespace std;} {selected private local
+decl {using namespace std;} {private local
 } 
 
 Function {Send_CB(Fl_Widget*, void*)} {open return_type {static void}
 } {
-  code {cout << "Hello, World!\\n" << endl;} {}
+  code {conversation_text->insert(send_text->value());
+conversation_text->insert("\\n");
+send_text->value("");} {}
 } 
 
 Function {Quit_CB(Fl_Widget*, void*)} {open return_type {static void}
@@ -25,23 +27,25 @@ Function {make_window()} {open
 } {
   Fl_Window {} {
     callback Quit_CB open
-    xywh {1159 443 345 410} type Double visible
+    xywh {1159 443 345 405} type Double hide resizable
   } {
     Fl_Text_Display conversation_text {
-      xywh {5 25 335 340}
+      xywh {5 15 335 350}
     }
-    Fl_Group {} {open
-      xywh {5 370 335 35}
+    Fl_Group {} {open selected
+      xywh {5 370 335 35} resizable
     } {
       Fl_Input send_text {
         label {input:}
-        xywh {10 374 255 22}
+        xywh {5 374 270 24} resizable
       }
       Fl_Button {} {
         label Send
         callback Send_CB
-        xywh {270 375 64 20}
+        xywh {280 373 60 25}
       }
     }
   }
+  code {Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+conversation_text->buffer(buff);} {}
 } 

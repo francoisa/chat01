@@ -26,3 +26,7 @@
 *.exe
 *.out
 *.app
+
+chat
+chat.cxx
+chat.h
